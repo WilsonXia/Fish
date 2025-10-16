@@ -39,20 +39,26 @@ public class Fish : MonoBehaviour
         if (collision.gameObject.CompareTag("Hook"))
         {
             print("Hook Detected");
+            Hook hook = GameManager.instance.hook;
             switch (GameManager.instance.fishingState)
             {
                 case FishingState.Sink:
-                    GameManager.instance.hook.LoseHealth(damage);
+                    hook.LoseHealth(damage);
+                    // If this is what caused it to get hooked
+                    if (hook.Health <= 0)
+                    {
+                        hook.AddFish(this);
+                    }
                     break;
                 case FishingState.Hooked:
-                    GameManager.instance.hook.LoseHealth(damage);
+                    // attach to player
+                    hook.AddFish(this);
                     break;
                 case FishingState.Caught:
                     break;
                 default:
                     break;
             }
-
         }
     }
 }
