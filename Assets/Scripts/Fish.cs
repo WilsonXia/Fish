@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(FishAI))]
 public class Fish : MonoBehaviour
 {
     // Fields
@@ -7,38 +8,26 @@ public class Fish : MonoBehaviour
     public int value;
     [SerializeField]
     int damage;
+    bool isCaught = false;
+    FishAI fishAI;
 
-    // Movement AI
-    [SerializeField]
-    float maxDistance;
-    float distance;
-    [SerializeField]
-    float speed;
+    void Start()
+    {
+        fishAI = GetComponent<FishAI>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        // Basic ahh movement
-        Vector2 newPosition = new Vector2(0, 0);
-        newPosition = Vector2.left * speed * Time.deltaTime;
-        transform.position += new Vector3(newPosition.x, newPosition.y, 0);
-
-        // Check if travelled distance reached
-        distance += newPosition.x;
-        if (distance >= maxDistance)
-        {
-            // Reset
-            distance = 0;
-            // reflect direction
-            speed *= -1;
-        }
+        if (!isCaught)
+            // Basic ahh movement
+            fishAI.Move();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Hook"))
         {
-            print("Hook Detected");
             Hook hook = GameManager.instance.hook;
             switch (GameManager.instance.fishingState)
             {
@@ -47,12 +36,17 @@ public class Fish : MonoBehaviour
                     // If this is what caused it to get hooked
                     if (hook.Health <= 0)
                     {
+                        isCaught = true;
                         hook.AddFish(this);
                     }
                     break;
                 case FishingState.Hooked:
                     // attach to player
-                    hook.AddFish(this);
+                    if (!isCaught)
+                    {
+                        isCaught = true;
+                        hook.AddFish(this);
+                    }
                     break;
                 case FishingState.Caught:
                     break;

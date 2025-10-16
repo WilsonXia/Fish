@@ -42,7 +42,6 @@ public class TextUpdater : Observer
             {
                 case UIUpdateEvent.Health:
                     updatedValue = hookRef.Health.ToString();
-                    // print($"Hook Health {hookRef.Health}");
                     break;
                 case UIUpdateEvent.Value:
                     updatedValue = hookRef.Value.ToString();
@@ -52,8 +51,6 @@ public class TextUpdater : Observer
             }
             // Update UI
             textMesh.text = message + " " + updatedValue;
-            // DEBUG
-            print(message + " " + updatedValue);
         }
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(HookMovement))]
 public class Hook : Subject
 {
+    [SerializeField]
+    Transform attachFishPoint;
     HookData data;
     HookMovement mov;
     public int Health { get { return data.Health; } }
@@ -58,7 +60,11 @@ public class Hook : Subject
         // Increment the rotation based on the number of fish
         // - Use a less expensive fish (sprite + info) for memory + computation efficieny?
         data.caughtFish.Add(fish);
-        fish.gameObject.SetActive(false);
+        fish.gameObject.transform.SetParent(attachFishPoint);
+
+        // TODO: Update anchors of fish to the tip of the head, or add a hooking point
+        fish.gameObject.transform.localPosition = new Vector3(0, -1, 0);
+        fish.gameObject.transform.Rotate(new Vector3(0, 0, 1), -90f);
         CalculateValue();
     }
 
