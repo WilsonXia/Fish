@@ -14,7 +14,7 @@ public class Hook : Subject
     public int Value { get { return data.Value; } }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         data = GetComponent<HookData>();
         mov = GetComponent<HookMovement>();
@@ -64,8 +64,21 @@ public class Hook : Subject
 
         // TODO: Update anchors of fish to the tip of the head, or add a hooking point
         fish.gameObject.transform.localPosition = new Vector3(0, -1, 0);
-        fish.gameObject.transform.Rotate(new Vector3(0, 0, 1), -90f);
+        // fish.gameObject.transform.Rotate(new Vector3(0, 0, 1), -90f);
+        RepositionFish();
+
         CalculateValue();
+    }
+
+    void RepositionFish()
+    {
+        int step = 0;
+        foreach (Transform child in attachFishPoint)
+        {
+            float angle = step * -15f;
+            child.Rotate(new Vector3(0, 0, 1), angle);
+            step++;
+        }
     }
 
     void CalculateValue()
