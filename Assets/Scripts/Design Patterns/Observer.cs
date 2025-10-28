@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public enum UIUpdateEvent
+public enum Observables
 {
     Health,
-    Value
+    Value,
+    GameOver,
 }
 public abstract class Observer : MonoBehaviour
 {
-    public abstract void OnNotify(GameObject gObject, UIUpdateEvent uiUE);
+    public abstract void OnNotify(GameObject gObject, Observables observable);
 }

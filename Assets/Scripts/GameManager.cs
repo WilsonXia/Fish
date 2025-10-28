@@ -15,7 +15,7 @@ public enum FishingState
     Caught
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : Subject
 {
     // Singleton
     public static GameManager instance;
@@ -46,11 +46,21 @@ public class GameManager : MonoBehaviour
                 break;
             case FishingState.Hooked:
                 fishingState = FishingState.Caught;
+                GameOver();
                 break;
             case FishingState.Caught:
                 break;
             default:
                 break;
         }
+    }
+
+    void GameOver()
+    {
+        // Take care of setting up transition to GameOver
+        gameState = GameState.GameOver;
+        // Tell others that the game is over
+        print("notify gameover");
+        Notify(gameObject, Observables.GameOver);
     }
 }

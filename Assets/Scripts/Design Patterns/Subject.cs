@@ -17,11 +17,11 @@ public class Subject : MonoBehaviour
         observers.Remove(observer);
     }
 
-    protected virtual void Notify(GameObject gObject, UIUpdateEvent uiUE)
+    protected virtual void Notify(GameObject gObject, Observables observable)
     {
         foreach(Observer observer in observers)
         {
-            observer.OnNotify(gObject, uiUE);
+            observer.OnNotify(gObject, observable);
         }
     }
 }

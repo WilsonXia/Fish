@@ -53,7 +53,7 @@ public class Hook : Subject
         {
             data.Health = 0;
         }
-        Notify(gameObject, UIUpdateEvent.Health);
+        Notify(gameObject, Observables.Health);
     }
 
     public void AddFish(Fish fish)
@@ -99,6 +99,6 @@ public class Hook : Subject
         {
             data.Value += fish.value;
         }
-        Notify(gameObject, UIUpdateEvent.Value);
+        Notify(gameObject, Observables.Value);
     }
 }

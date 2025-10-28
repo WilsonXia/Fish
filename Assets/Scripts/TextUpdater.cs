@@ -8,7 +8,7 @@ public class TextUpdater : Observer
     [SerializeField]
     string message;
     [SerializeField]
-    UIUpdateEvent specificEvent;
+    Observables specificEvent;
     TextMeshProUGUI textMesh;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -28,22 +28,22 @@ public class TextUpdater : Observer
         }
     }
 
-    public override void OnNotify(GameObject gObject, UIUpdateEvent uiUE)
+    public override void OnNotify(GameObject gObject, Observables observable)
     {
         // Read parameters
-        bool check = uiUE == specificEvent;
+        bool check = observable == specificEvent;
         Hook hookRef = gObject.GetComponent<Hook>();
         string updatedValue = "";
         // Check if we received the right event
         if (check)
         {
             // update value dependent upon UIUpdateEvent
-            switch (uiUE)
+            switch (observable)
             {
-                case UIUpdateEvent.Health:
+                case Observables.Health:
                     updatedValue = hookRef.Health.ToString();
                     break;
-                case UIUpdateEvent.Value:
+                case Observables.Value:
                     updatedValue = hookRef.Value.ToString();
                     break;
                 default:
