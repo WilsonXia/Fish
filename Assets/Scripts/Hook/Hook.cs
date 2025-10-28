@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,8 @@ public class Hook : Subject
 {
     [SerializeField]
     Transform attachFishPoint;
+    [SerializeField]
+     float padHeight = 0.4f;
     HookData data;
     HookMovement mov;
     public int Health { get { return data.Health; } }
@@ -55,27 +58,35 @@ public class Hook : Subject
 
     public void AddFish(Fish fish)
     {
-        // Think about how to attach the fish
-        // Attach sprite within a 120 degree range from the lowest point of the hook
-        // Increment the rotation based on the number of fish
         // - Use a less expensive fish (sprite + info) for memory + computation efficieny?
         data.caughtFish.Add(fish);
-        fish.gameObject.transform.SetParent(attachFishPoint);
-
-        // TODO: Update anchors of fish to the tip of the head, or add a hooking point
-        fish.gameObject.transform.localPosition = new Vector3(0, -1, 0);
-        // fish.gameObject.transform.Rotate(new Vector3(0, 0, 1), -90f);
-        RepositionFish();
-
+        fish.gameObject.transform.SetParent(attachFishPoint); // attach to hookingpoint
+        // Reset position
+        fish.gameObject.transform.localPosition = new Vector3(0, padHeight, 0);
+        // Rotate for aesthetic
+        if (attachFishPoint.childCount > 1)
+        {
+            RepositionFish();
+        }
+        else
+        {
+            fish.gameObject.transform.Rotate(new Vector3(0, 0, 1), -90f);
+        }
         CalculateValue();
     }
 
     void RepositionFish()
     {
+        // make sure fish models all place their sprite anchor to the head
         int step = 0;
         foreach (Transform child in attachFishPoint)
         {
-            float angle = step * -15f;
+            float angleStep = (float)step / (attachFishPoint.childCount - 1);
+            float angle = Mathf.LerpAngle(-45, 45, angleStep);
+            // print($"Step: {step} Angle:{angle} Fish:{child.name}");
+            // Resets rotation
+            child.rotation = Quaternion.Euler(0, 0, -90);
+            // Rotates
             child.Rotate(new Vector3(0, 0, 1), angle);
             step++;
         }

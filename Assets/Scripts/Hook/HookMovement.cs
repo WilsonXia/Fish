@@ -33,7 +33,7 @@ public class HookMovement : MonoBehaviour
             // Vertical Movement
             if (reelAction.IsPressed())
             {
-                print("Boosting");
+                // print("Boosting");
                 currentSpeed += speedBoost;
             }
             // Constant Speed
