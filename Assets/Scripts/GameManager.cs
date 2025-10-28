@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public enum GameState
+{
+    Start,
+    InGame,
+    Pause,
+    GameOver
+}
+
 public enum FishingState
 {
     Sink,
@@ -13,9 +21,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     // Fields
-    public Hook hook;
+    public GameState gameState = GameState.Start;
     public FishingState fishingState;
-    public bool onPause = false;
+    public Hook hook;
+
+    // Properties
+    public bool InGame { get { return gameState == GameState.InGame; } }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {

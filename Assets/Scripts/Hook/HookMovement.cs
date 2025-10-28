@@ -28,20 +28,23 @@ public class HookMovement : MonoBehaviour
 
     public void MoveCheck()
     {
-        if (GameManager.instance.fishingState != FishingState.Caught)
+        if (GameManager.instance.InGame)
         {
-            // Vertical Movement
-            if (reelAction.IsPressed())
+            if (GameManager.instance.fishingState != FishingState.Caught)
             {
-                // print("Boosting");
-                currentSpeed += speedBoost;
-            }
-            // Constant Speed
-            currentSpeed += descendSpeed;
+                // Vertical Movement
+                if (reelAction.IsPressed())
+                {
+                    // print("Boosting");
+                    currentSpeed += speedBoost;
+                }
+                // Constant Speed
+                currentSpeed += descendSpeed;
 
-            Movement(currentSpeed);
-            // Reset the speed for future calc
-            currentSpeed = 0;
+                Movement(currentSpeed);
+                // Reset the speed for future calc
+                currentSpeed = 0;
+            }
         }
     }
 
@@ -61,11 +64,11 @@ public class HookMovement : MonoBehaviour
         // The farther it is from the mouse, the faster it moves
         if (toMouse > 0)
         {
-            newPosition.x += horizontalSpeed * toMouse/2 * Time.deltaTime;
+            newPosition.x += horizontalSpeed * toMouse / 2 * Time.deltaTime;
         }
         else if (toMouse < 0)
         {
-            newPosition.x += horizontalSpeed * toMouse/2 * Time.deltaTime;
+            newPosition.x += horizontalSpeed * toMouse / 2 * Time.deltaTime;
         }
 
         // Vertical Movement depends on FishingState

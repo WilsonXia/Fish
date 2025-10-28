@@ -19,7 +19,7 @@ public class Fish : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isCaught)
+        if (!isCaught && GameManager.instance.InGame)
             // Basic ahh movement
             fishAI.Move();
     }
