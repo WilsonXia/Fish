@@ -15,6 +15,6 @@ public class LevelSetup : MonoBehaviour
 
     void Start()
     {
-        bottomBound.transform.position = new Vector3(0, levelData.Depth, 0);
+        bottomBound.transform.position = new Vector3(0, -levelData.Depth, 0);
     }
 }

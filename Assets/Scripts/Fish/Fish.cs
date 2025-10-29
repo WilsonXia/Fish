@@ -10,10 +10,14 @@ public class Fish : MonoBehaviour
     int damage;
     bool isCaught = false;
     FishAI fishAI;
+    float size;
+    public float Size { get { return size; } }
 
     void Start()
     {
         fishAI = GetComponent<FishAI>();
+        // Full length of fish
+        size = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
     }
 
     // Update is called once per frame

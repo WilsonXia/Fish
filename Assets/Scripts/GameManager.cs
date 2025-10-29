@@ -60,7 +60,6 @@ public class GameManager : Subject
         // Take care of setting up transition to GameOver
         gameState = GameState.GameOver;
         // Tell others that the game is over
-        print("notify gameover");
         Notify(gameObject, Observables.GameOver);
     }
 }

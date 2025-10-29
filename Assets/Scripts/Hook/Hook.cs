@@ -10,7 +10,7 @@ public class Hook : Subject
     [SerializeField]
     Transform attachFishPoint;
     [SerializeField]
-     float padHeight = 0.4f;
+    float padHeight = 0.4f;
     HookData data;
     HookMovement mov;
     public int Health { get { return data.Health; } }
@@ -61,8 +61,6 @@ public class Hook : Subject
         // - Use a less expensive fish (sprite + info) for memory + computation efficieny?
         data.caughtFish.Add(fish);
         fish.gameObject.transform.SetParent(attachFishPoint); // attach to hookingpoint
-        // Reset position
-        fish.gameObject.transform.localPosition = new Vector3(0, padHeight, 0);
         // Rotate for aesthetic
         if (attachFishPoint.childCount > 1)
         {
@@ -70,6 +68,9 @@ public class Hook : Subject
         }
         else
         {
+            // Caught just one fish
+            // Reset position
+            fish.gameObject.transform.localPosition = new Vector3(0, -(fish.Size / 2 - padHeight), 0);
             fish.gameObject.transform.Rotate(new Vector3(0, 0, 1), -90f);
         }
         CalculateValue();
@@ -83,11 +84,15 @@ public class Hook : Subject
         {
             float angleStep = (float)step / (attachFishPoint.childCount - 1);
             float angle = Mathf.LerpAngle(-45, 45, angleStep);
+            float fishLength = child.GetComponent<Fish>().Size / 2;
             // print($"Step: {step} Angle:{angle} Fish:{child.name}");
             // Resets rotation
             child.rotation = Quaternion.Euler(0, 0, -90);
+            // Reset position
+            child.localPosition = new Vector3(0, 0, 0);
             // Rotates
             child.Rotate(new Vector3(0, 0, 1), angle);
+            child.Translate(new Vector3(padHeight + fishLength, 0, 0));
             step++;
         }
     }
