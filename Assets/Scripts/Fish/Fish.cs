@@ -13,11 +13,21 @@ public class Fish : MonoBehaviour
     float size;
     public float Size { get { return size; } }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + size / 2, transform.position.y));
+    }
+
+    void Awake()
+    {
+        size = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+    }
+
     void Start()
     {
         fishAI = GetComponent<FishAI>();
         // Full length of fish
-        size = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
     }
 
     // Update is called once per frame
