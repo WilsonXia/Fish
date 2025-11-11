@@ -15,19 +15,17 @@ public class Fish : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        // Full length of fish
+        size = GetComponent<SpriteRenderer>().sprite.bounds.size.x * transform.localScale.x;
         Gizmos.color = Color.black;
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + size / 2, transform.position.y));
     }
 
     void Awake()
     {
-        size = GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-    }
-
-    void Start()
-    {
         fishAI = GetComponent<FishAI>();
         // Full length of fish
+        size = GetComponent<SpriteRenderer>().sprite.bounds.size.x * transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -40,6 +38,7 @@ public class Fish : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        // Check if hook collided
         if (collision.gameObject.CompareTag("Hook"))
         {
             Hook hook = GameManager.instance.hook;
@@ -47,8 +46,16 @@ public class Fish : MonoBehaviour
             {
                 case FishingState.Sink:
                     hook.LoseHealth(damage);
-                    // If this is what caused it to get hooked
-                    if (hook.Health <= 0)
+                    if (hook.Health > 0)
+                    {
+                        // Flee
+                        // Disable Interaction
+                        GetComponent<BoxCollider2D>().isTrigger = false;
+                        // swiftly move away from the hook
+                        // Despawn
+                        Destroy(gameObject);
+                    }
+                    else // Got Hooked
                     {
                         isCaught = true;
                         hook.AddFish(this);
@@ -68,5 +75,11 @@ public class Fish : MonoBehaviour
                     break;
             }
         }
+    }
+
+    // Reference
+    public void Randomize()
+    {
+        fishAI.Randomize();
     }
 }

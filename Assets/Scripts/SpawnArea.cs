@@ -5,6 +5,8 @@ public class SpawnArea : MonoBehaviour
     [SerializeField]
     GameObject entity;
     [SerializeField]
+    bool isSchool;
+    [SerializeField]
     float spawnRadius;
     [SerializeField]
     int spawnCount;
@@ -26,12 +28,19 @@ public class SpawnArea : MonoBehaviour
     // Spawn the entity
     void SpawnEntity()
     {
-        Instantiate(entity, GetRandomPoint(), Quaternion.identity);
+        if (!isSchool)
+        {
+            Instantiate(entity, GetRandomPoint(), Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(entity, transform.position, Quaternion.identity);
+        }
     }
 
     void Start()
     {
-        for(int i = 0; i < spawnCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
             SpawnEntity();
         }

@@ -16,8 +16,8 @@ public class FishAI : MonoBehaviour
     [SerializeField]
     float maxDistance;
     bool isFlipped = false;
-
-    public void Start()
+    
+    public void Randomize()
     {
         speed += Random.Range(-1f, 1f);
         distTravelled += Random.Range(0f, maxDistance - 0.3f);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UITriggers : Observer
 {
@@ -20,6 +21,12 @@ public class UITriggers : Observer
         GameManager.instance.gameState = GameState.InGame;
         // Hide the StartTrigger
         startingPage.SetActive(false);
+    }
+
+    public void TriggerRestart()
+    {
+        // Restart the game scene
+        SceneManager.LoadSceneAsync(0);
     }
 
     public override void OnNotify(GameObject gObject, Observables observable)
