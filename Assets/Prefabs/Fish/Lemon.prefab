@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1788798406518685645}
   - component: {fileID: 3571520382152038940}
   - component: {fileID: 7411594582289229760}
-  - component: {fileID: 3250609860684627575}
+  - component: {fileID: 6939215265614048124}
   m_Layer: 0
   m_Name: Lemon
   m_TagString: Untagged
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   value: 5
   damage: 1
---- !u!114 &3250609860684627575
+--- !u!114 &6939215265614048124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,9 +162,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8487984927088100885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95af62cf7f5e3724f9c139b68d90013e, type: 3}
+  m_Script: {fileID: 11500000, guid: b9f8c0d9c4796d94cb61b0530664c1c1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishAI
-  pattern: 0
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleAI
   speed: 4
+  acceleration: 0
   maxDistance: 2

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7921676800848502287}
   - component: {fileID: 2842212777612004507}
   - component: {fileID: 9206032086108077049}
-  - component: {fileID: 3494832636754458203}
+  - component: {fileID: 1185420262628907013}
   m_Layer: 0
   m_Name: Melty
   m_TagString: Untagged
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fish
   value: 3
   damage: 1
---- !u!114 &3494832636754458203
+--- !u!114 &1185420262628907013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,9 +162,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8245198323583107359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95af62cf7f5e3724f9c139b68d90013e, type: 3}
+  m_Script: {fileID: 11500000, guid: b9f8c0d9c4796d94cb61b0530664c1c1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FishAI
-  pattern: 0
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleAI
   speed: 4
-  maxDistance: 4
+  acceleration: 0
+  maxDistance: 6

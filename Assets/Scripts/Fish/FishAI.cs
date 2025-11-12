@@ -1,21 +1,38 @@
 using UnityEngine;
 
-enum FishMovement
-{
-    Basic,
-    Fast
-}
+// enum FishMovement
+// {
+//     Basic,
+//     Fast
+// }
 public class FishAI : MonoBehaviour
 {
-    // Movement AI
+    // Experimental
+    // [SerializeField]
+    // FishMovement pattern;
+
+    // Movement Variables
     [SerializeField]
-    FishMovement pattern;
+    protected float speed;
     [SerializeField]
-    float speed;
-    float distTravelled;
+    protected float acceleration;
+    // --------------------
+    protected Vector2 direction = Vector2.left;
+    protected Vector2 velocity = Vector2.zero;
+    protected Vector2 position = Vector2.zero;
+
+    // Distance related
+    protected float distTravelled;
     [SerializeField]
-    float maxDistance;
-    bool isFlipped = false;
+    protected float maxDistance;
+
+    // Sprite Flip
+    protected bool isFlipped = false;
+
+    public void Start()
+    {
+        position = transform.position;
+    }
     
     public void Randomize()
     {
@@ -27,38 +44,22 @@ public class FishAI : MonoBehaviour
         }
     }
 
-    public void Move()
+    public virtual void Move()
     {
-        Vector3 distCovered = Vector3.left * speed * Time.deltaTime;
-        transform.position += distCovered;
-        // Measure Distance Travelled
-        MeasureDistanceTravelled();
-        // Check if travelled distance reached
-        if (distTravelled >= maxDistance)
-        {
-            // Reset
-            distTravelled = 0;
-            // reflect direction
-            Flip();
-        }
-    }
-    
-    void MeasureDistanceTravelled()
-    {
-        if (speed > 0) // Going left
-        {
-            distTravelled += speed * Time.deltaTime;
-        }
-        else // Going Right
-        {
-            distTravelled += -speed * Time.deltaTime;
-        }
+        // Physics Procedure
+        velocity = direction * speed * Time.deltaTime;
+        position += velocity;
+        transform.position = position;
+
+        // BackAndForth();
     }
 
-    void Flip()
+    // For now, direction is decided by Flip, but it should be the other way around
+    // Check direction to see if it needs to Flip
+    protected void Flip()
     {
         isFlipped = !isFlipped;
         GetComponent<SpriteRenderer>().flipX = isFlipped;
-        speed *= -1;
+        direction *= -1;
     }
 }
