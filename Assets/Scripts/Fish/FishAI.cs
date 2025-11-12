@@ -1,43 +1,28 @@
 using UnityEngine;
 
-// enum FishMovement
-// {
-//     Basic,
-//     Fast
-// }
 public class FishAI : MonoBehaviour
 {
-    // Experimental
-    // [SerializeField]
-    // FishMovement pattern;
-
     // Movement Variables
     [SerializeField]
     protected float speed;
-    [SerializeField]
-    protected float acceleration;
+    protected Vector2 acceleration = Vector2.zero;
     // --------------------
     protected Vector2 direction = Vector2.left;
     protected Vector2 velocity = Vector2.zero;
     protected Vector2 position = Vector2.zero;
 
-    // Distance related
-    protected float distTravelled;
-    [SerializeField]
-    protected float maxDistance;
 
     // Sprite Flip
-    protected bool isFlipped = false;
+    protected bool isFacingRight = false;
 
-    public void Start()
+    public virtual void Start()
     {
         position = transform.position;
     }
     
-    public void Randomize()
+    public virtual void Randomize()
     {
         speed += Random.Range(-1f, 1f);
-        distTravelled += Random.Range(0f, maxDistance - 0.3f);
         if(Random.Range(0f, 0.5f) > 0.3f)
         {
             Flip();
@@ -47,19 +32,40 @@ public class FishAI : MonoBehaviour
     public virtual void Move()
     {
         // Physics Procedure
-        velocity = direction * speed * Time.deltaTime;
-        position += velocity;
+        // Add acceleration to velocity
+        velocity += acceleration * Time.deltaTime;
+        // Add velocity to position
+        position += velocity * Time.deltaTime;
+        // Normalize Direction
+        // direction = velocity.normalized;
         transform.position = position;
+        // Reset Acceleration
+        acceleration = Vector2.zero;
+    }
 
-        // BackAndForth();
+    public void ApplyForce(Vector2 force)
+    {
+        // f = ma, a = f/m later
+        // acceleration acts as the sum of all forces
+        acceleration += force;
+    }
+    public void ApplyDrag(float dragCoeff)
+    {
+        Vector2 drag = velocity * -1;
+        drag.Normalize();
+        drag *= dragCoeff;
+        ApplyForce(drag);
     }
 
     // For now, direction is decided by Flip, but it should be the other way around
     // Check direction to see if it needs to Flip
+
+    // TODO: Flip fish when they reach a side boundary
+    //  Make a boundary trigger for that
     protected void Flip()
     {
-        isFlipped = !isFlipped;
-        GetComponent<SpriteRenderer>().flipX = isFlipped;
+        isFacingRight = !isFacingRight;
+        GetComponent<SpriteRenderer>().flipX = isFacingRight;
         direction *= -1;
     }
 }

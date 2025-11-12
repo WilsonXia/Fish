@@ -166,5 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAI
   speed: 4
-  acceleration: 0
   maxDistance: 2
+  pushForce: 1000
+  dragCoeff: 5
