@@ -75,6 +75,13 @@ public class Fish : MonoBehaviour
                     break;
             }
         }
+        else if (collision.gameObject.CompareTag("SideBound"))
+        {
+            if (fishAI.IsBounded)
+            {
+                fishAI.Bounce();
+            }
+        }
     }
 
     // Reference

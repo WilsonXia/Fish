@@ -8,7 +8,7 @@ public class LevelData : MonoBehaviour
     public float Depth { get { return depth; } }
     [SerializeField]
     List<GameObject> encounterableFish;
-    public List<GameObject> Fishes {get { return encounterableFish; }}
+    public List<GameObject> Fishes { get { return encounterableFish; } }
 
     // Customization?
     // Color Palettes? Structures? Background?

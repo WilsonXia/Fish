@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class FishAI : MonoBehaviour
 {
+    // Toggles
+    [SerializeField]
+    protected bool isBoundaryLocked = false;
+    public bool IsBounded { get { return isBoundaryLocked; } }
     // Movement Variables
     [SerializeField]
     protected float speed;
@@ -19,11 +23,11 @@ public class FishAI : MonoBehaviour
     {
         position = transform.position;
     }
-    
+
     public virtual void Randomize()
     {
         speed += Random.Range(-1f, 1f);
-        if(Random.Range(0f, 0.5f) > 0.3f)
+        if (Random.Range(0f, 0.5f) > 0.3f)
         {
             Flip();
         }
@@ -59,13 +63,16 @@ public class FishAI : MonoBehaviour
 
     // For now, direction is decided by Flip, but it should be the other way around
     // Check direction to see if it needs to Flip
-
-    // TODO: Flip fish when they reach a side boundary
-    //  Make a boundary trigger for that
     protected void Flip()
     {
         isFacingRight = !isFacingRight;
         GetComponent<SpriteRenderer>().flipX = isFacingRight;
         direction *= -1;
+    }
+
+    public void Bounce()
+    {
+        velocity = -velocity;
+        Flip();
     }
 }

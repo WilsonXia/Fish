@@ -11,6 +11,12 @@ public class BurstAI : FishAI
     float timer = 0;
     float moveCooldown = 2;
 
+    public override void Start()
+    {
+        base.Start();
+        isBoundaryLocked = true;
+    }
+
     public override void Randomize()
     {
         base.Randomize();
