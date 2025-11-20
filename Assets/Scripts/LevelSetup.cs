@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class LevelSetup : MonoBehaviour
 {
-    [SerializeField]
-    GameObject bottomBound;
     LevelData levelData;
+    [SerializeField]
+    GameObject leftBound, rightBound, bottomBound;
+    public float LeftBound { get { return leftBound.transform.position.x; } }
+    public float RightBound { get { return rightBound.transform.position.x; } }
 
     void Awake()
     {

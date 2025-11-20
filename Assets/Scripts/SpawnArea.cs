@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class SpawnArea : MonoBehaviour
 {
-    [SerializeField]
-    GameObject entity;
+    public GameObject entity;
     [SerializeField]
     bool isSchool;
     [SerializeField]
@@ -30,7 +29,14 @@ public class SpawnArea : MonoBehaviour
     {
         if (!isSchool)
         {
-            Instantiate(entity, GetRandomPoint(), Quaternion.identity);
+            GameObject spawned = Instantiate(entity, GetRandomPoint(), Quaternion.identity);
+            if (CheckIfFish(spawned))
+            {
+                // send to fish bin
+                spawned.transform.SetParent(LevelSpawner.fishes.transform);
+                // Randomize
+                spawned.GetComponent<Fish>().Randomize();
+            }
         }
         else
         {
@@ -38,11 +44,25 @@ public class SpawnArea : MonoBehaviour
         }
     }
 
+    bool CheckIfFish(GameObject gameObject)
+    {
+        return gameObject.CompareTag("Fish");
+    }
+
     void Start()
     {
         for (int i = 0; i < spawnCount; i++)
         {
             SpawnEntity();
+        }
+        // Remove once job is done
+        if (transform.parent == null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(transform.parent.gameObject);
         }
     }
 }

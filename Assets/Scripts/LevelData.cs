@@ -4,11 +4,13 @@ using UnityEngine;
 public class LevelData : MonoBehaviour
 {
     [SerializeField]
-    float depth;
-    public float Depth { get { return depth; } }
-    [SerializeField]
     List<GameObject> encounterableFish;
     public List<GameObject> Fishes { get { return encounterableFish; } }
+
+    [SerializeField]
+    float depth;
+    public float Depth { get { return depth; } }
+    
 
     // Customization?
     // Color Palettes? Structures? Background?

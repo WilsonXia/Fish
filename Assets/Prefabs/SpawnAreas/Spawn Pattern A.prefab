@@ -95,7 +95,7 @@ MonoBehaviour:
   entity: {fileID: 5540030353476692603, guid: bc771d929ce22ea44a5740dc68d49170, type: 3}
   isSchool: 0
   spawnRadius: 6.05
-  spawnCount: 8
+  spawnCount: 3
 --- !u!1 &8128370977572327919
 GameObject:
   m_ObjectHideFlags: 0
