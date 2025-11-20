@@ -53,7 +53,7 @@ public class FishAI : MonoBehaviour
         // acceleration acts as the sum of all forces
         acceleration += force;
     }
-    public void ApplyDrag(float dragCoeff)
+    public void ApplyDrag(float dragCoeff = 1.5f)
     {
         Vector2 drag = velocity * -1;
         drag.Normalize();

@@ -17,32 +17,43 @@ public class BackAndForth : FishAI
         BackNForth();
         base.Move();
     }
+
+    void SwitchDirection()
+    {
+        // Record new position
+        previousPos = position;
+        // cut velocity
+        velocity = Vector2.zero;
+        // reflect direction
+        Flip();
+    }
     void BackNForth()
     {
         if (!isFacingRight)
         {
             if (previousPos.x - position.x >= maxDistance)
             {
-                // Record new position
-                previousPos = position;
-                // cut velocity
-                velocity = Vector2.zero;
-                // reflect direction
-                Flip();
+                SwitchDirection();
+            }
+            else if (previousPos.x - position.x >= maxDistance / 2)
+            {
+                // Start slowing if at midpoint
+                print("slowing down!!");
+                ApplyDrag(speed * 1.8f);
             }
         }
         else
         {
             if (position.x - previousPos.x >= maxDistance)
             {
-                // Record new position
-                previousPos = position;
-                // cut velocity
-                velocity = Vector2.zero;
-                // reflect direction
-                Flip();
+                SwitchDirection();
+            }
+            else if(position.x - previousPos.x >= maxDistance / 2)
+            {
+                ApplyDrag(speed * 1.8f);
             }
         }
+        // MOVE HERE
         ApplyForce(direction * speed);
     }
 }

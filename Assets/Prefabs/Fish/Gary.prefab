@@ -165,5 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d0f11f7e20372e46916bfbaed408a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BackAndForth
-  speed: 1.72
-  maxDistance: 4
+  isBoundaryLocked: 0
+  speed: 3
+  maxDistance: 12

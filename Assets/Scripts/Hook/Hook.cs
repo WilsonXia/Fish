@@ -70,8 +70,6 @@ public class Hook : Subject
         {
             // Caught just one fish
             // Reset position
-            // fish.gameObject.transform.localPosition = new Vector3(0, -(fish.Size / 2 - padHeight), 0);
-            print(fish.Size);
             fish.gameObject.transform.localPosition = new Vector3(0, -fish.Size / 2, 0);
             fish.gameObject.transform.Rotate(new Vector3(0, 0, 1), -90f);
         }

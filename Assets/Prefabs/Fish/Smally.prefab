@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f8c0d9c4796d94cb61b0530664c1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAI
-  speed: 2
-  pushForce: 0
+  isBoundaryLocked: 0
+  speed: 4
+  pushForce: 1000
   dragCoeff: 2.5
