@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class HookMovement : MonoBehaviour
 {
+    Hook hook;
     // Movement ---------------------------------- 
     [SerializeField]
     float currentSpeed = 0f;
@@ -26,17 +27,19 @@ public class HookMovement : MonoBehaviour
         rightBound = rightBoundPoint.position;
     }
 
-    public void MoveCheck()
+    public void MoveCheck(HookData hookData)
     {
         if (GameManager.instance.InGame)
         {
             if (GameManager.instance.fishingState != FishingState.Caught)
             {
                 // Vertical Movement
-                if (reelAction.IsPressed())
+                if (reelAction.IsPressed() && hookData.ReelGauge > 0)
                 {
-                    // print("Boosting");
+                    // Speed UP
                     currentSpeed += speedBoost;
+                    // Decrease Gauge
+                    hookData.ReelGauge -= Time.deltaTime;
                 }
                 // Constant Speed
                 currentSpeed += descendSpeed;
@@ -49,7 +52,6 @@ public class HookMovement : MonoBehaviour
     }
 
     // movement
-    // TODO: Check if acceleration feels nicer
     void Movement(float speed)
     {
         Vector2 newPosition = new Vector2(transform.position.x, transform.position.y);

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(HookData))]
 [RequireComponent(typeof(HookMovement))]
-public class Hook : Subject
+public class Hook : MonoBehaviour
 {
     [SerializeField]
     Transform attachFishPoint;
@@ -13,26 +13,25 @@ public class Hook : Subject
     float padHeight = 0.4f;
     HookData data;
     HookMovement mov;
-    public int Health { get { return data.Health; } }
-    public int Value { get { return data.Value; } }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public HookData Data { get { return data;}}
+    
+    // Initializing
     void Awake()
     {
         data = GetComponent<HookData>();
         mov = GetComponent<HookMovement>();
     }
-    // Update is called once per frame
+
     void Update()
     {
         switch (GameManager.instance.fishingState)
         {
             case FishingState.Sink:
                 // Player Info Check
-                if (Health <= 0)
+                if (Data.Health <= 0)
                 {
                     // Start Reeling
-                    GameManager.instance.fishingState = FishingState.Hooked;
+                    GameManager.instance.AdvanceFishState();
                 }
                 break;
             case FishingState.Hooked:
@@ -43,9 +42,14 @@ public class Hook : Subject
                 break;
         }
         // Movement Check
-        mov.MoveCheck();
+        mov.MoveCheck(data);
     }
 
+    // Manager Methods
+    public void AddObserver(Observer obs)
+    {
+        data.AddObserver(obs);
+    }
     public void LoseHealth(int amount)
     {
         data.Health -= amount;
@@ -53,7 +57,15 @@ public class Hook : Subject
         {
             data.Health = 0;
         }
-        Notify(gameObject, Observables.Health);
+    }
+    
+    void CalculateValue()
+    {
+        data.Value = 0;
+        foreach (Fish fish in data.caughtFish)
+        {
+            data.Value += fish.value;
+        }
     }
 
     public void AddFish(Fish fish)
@@ -95,15 +107,5 @@ public class Hook : Subject
             child.Translate(new Vector3(padHeight + fishLength, 0, 0));
             step++;
         }
-    }
-
-    void CalculateValue()
-    {
-        data.Value = 0;
-        foreach (Fish fish in data.caughtFish)
-        {
-            data.Value += fish.value;
-        }
-        Notify(gameObject, Observables.Value);
     }
 }

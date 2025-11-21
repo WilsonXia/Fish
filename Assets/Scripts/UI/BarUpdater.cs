@@ -1,25 +1,31 @@
 using System;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class TextUpdater : Observer
+[RequireComponent(typeof(Slider))]
+public class BarUpdater : Observer
 {
     [SerializeField]
-    string message;
-    [SerializeField]
-    Observables specificEvent;
-    TextMeshProUGUI textMesh;
+    Observables specificEvent = Observables.ReelGauge; // Reel Gauge for now
+    Slider slider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        textMesh = GetComponent<TextMeshProUGUI>();
+        slider = GetComponent<Slider>();
         // Connect with Hook
         Hook hookRef = GameManager.instance.hook;
         if (hookRef != null)
         {
             hookRef.AddObserver(this);
+            switch (specificEvent)
+            {
+                case Observables.ReelGauge:
+                    slider.maxValue = hookRef.Data.MaxReelGauge;
+                    break;
+                default:
+                    break;
+            }
             OnNotify(hookRef.gameObject, specificEvent);
         }
         else
@@ -33,24 +39,19 @@ public class TextUpdater : Observer
         // Read parameters
         bool check = observable == specificEvent;
         Hook hookRef = gObject.GetComponent<Hook>();
-        string updatedValue = "";
         // Check if we received the right event
         if (check)
         {
-            // update value dependent upon UIUpdateEvent
+            // read value dependent upon UIUpdateEvent
             switch (observable)
             {
-                case Observables.Health:
-                    updatedValue = hookRef.Health.ToString();
-                    break;
-                case Observables.Value:
-                    updatedValue = hookRef.Value.ToString();
+                case Observables.ReelGauge:
+                    // Update UI
+                    slider.value = Mathf.Lerp( hookRef.Data.MaxReelGauge, 0, hookRef.Data.ReelGauge / hookRef.Data.MaxReelGauge);
                     break;
                 default:
                     break;
             }
-            // Update UI
-            textMesh.text = message + " " + updatedValue;
         }
     }
 }

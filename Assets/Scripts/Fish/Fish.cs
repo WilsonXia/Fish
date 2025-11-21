@@ -46,7 +46,7 @@ public class Fish : MonoBehaviour
             {
                 case FishingState.Sink:
                     hook.LoseHealth(damage);
-                    if (hook.Health > 0)
+                    if (hook.Data.Health > 0)
                     {
                         // Flee
                         // Disable Interaction
